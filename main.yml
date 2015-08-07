@@ -12,6 +12,6 @@
     - ssh_keys: []
 
   roles:
-    - dependencies
+    - base
     - dokku
     - sshkeys

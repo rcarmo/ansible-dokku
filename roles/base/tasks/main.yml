@@ -8,7 +8,7 @@
   copy: src=~/.ssh/id_rsa.pub dest=/root/.ssh/id_rsa.pub mode=400 owner=root group=root
   sudo: yes
 
-- name: install dependencies
+- name: install base packages
   apt: name={{ item }} state=latest update_cache=yes
   with_items:
     - tmux
