@@ -1,19 +1,17 @@
 ---
 
-- name: install git
-  apt: "name=git state=latest update_cache=yes"
+- name: prep root .ssh
+  file: path=/root/.ssh state=directory mode=0700
+  sudo: yes
 
-- name: install make
-  apt: "name=make state=latest update_cache=yes"
+- name: copy public key
+  copy: src=~/.ssh/id_rsa.pub dest=/root/.ssh/id_rsa.pub mode=400 owner=root group=root
+  sudo: yes
 
-- name: install curl
-  apt: "name=curl state=latest update_cache=yes"
-
-- name: install software-properties-common
-  apt: "name=software-properties-common state=latest update_cache=yes"
-
-- name: install man-db
-  apt: "name=man-db state=latest update_cache=yes"
-
-- name: install help2man
-  apt: "name=help2man state=latest update_cache=yes"
+- name: install dependencies
+  apt: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - tmux
+    - htop
+    - wget
+    - software-properties-common

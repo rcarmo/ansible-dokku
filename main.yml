@@ -4,9 +4,9 @@
   sudo: yes
 
   vars:
-    - dokku_version: "0.3.14"
+    - dokku_version: "0.3.22"
     - dokku_vhost: "{{ hostname }}"
-    - dokku_plugins: []
+    - dokku_plugins: ["ohardy/dokku-volume", "statianzo/dokku-shoreman"]
     - sshkeys: []
 
   roles:

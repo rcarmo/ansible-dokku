@@ -1,15 +1,19 @@
 ---
 
-- name: clone dokku repository
-  git: "repo=https://github.com/progrium/dokku.git dest=/home/{{ ansible_ssh_user }}/dokku version=v{{ dokku_version }}"
+- name: fetch bootstrap script
+  get_url: url=https://raw.github.com/progrium/dokku/v{{ dokku_version }}/bootstrap.sh dest=/tmp/bootstrap.sh
+
+- name: debconf settings
+  shell: 'echo "dokku {{ item }}" | debconf-set-selections'
+  with_items:
+    - "dokku/web_config boolean false"
+    - "dokku/vhost_enable boolean true"
+    - "dokku/hostname string {{ dokku_vhost }}"
+    - "dokku/key_file string /root/.ssh/id_rsa.pub"
   sudo: yes
 
-- name: make install dokku
-  command: "make install chdir=/home/{{ ansible_ssh_user }}/dokku creates=/var/lib/dokku"
-  sudo: yes
-
-- name: "Configure dokku vhost setting"
-  copy: "dest=/home/dokku/VHOST content={{ dokku_vhost }} owner=dokku group=root"
+- name: install stable release
+  command: "sudo DOKKU_TAG={{ dokku_version }} DEBIAN_FRONTEND=noninteractive bash /tmp/bootstrap.sh"
   sudo: yes
 
 - name: "Install plugins if specified"
