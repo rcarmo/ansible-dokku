@@ -6,8 +6,10 @@
   vars:
     - dokku_version: "0.3.22"
     - dokku_vhost: "{{ hostname }}"
-    - dokku_plugins: ["ohardy/dokku-volume", "statianzo/dokku-shoreman"]
-    - sshkeys: []
+    - dokku_plugins: 
+        - { repo: "http://github.com/ohardy/dokku-volume", name: "volume" }
+        - { repo: "http://github.com/statianzo/dokku-shoreman", name: "dokku-shoreman" }
+    - ssh_keys: []
 
   roles:
     - dependencies

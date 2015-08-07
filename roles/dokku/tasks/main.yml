@@ -3,7 +3,7 @@
 - name: fetch bootstrap script
   get_url: url=https://raw.github.com/progrium/dokku/v{{ dokku_version }}/bootstrap.sh dest=/tmp/bootstrap.sh
 
-- name: debconf settings
+- name: prepare for unattended install
   shell: 'echo "dokku {{ item }}" | debconf-set-selections'
   with_items:
     - "dokku/web_config boolean false"
@@ -12,11 +12,11 @@
     - "dokku/key_file string /root/.ssh/id_rsa.pub"
   sudo: yes
 
-- name: install stable release
+- name: install stable release (including buildstep, should take a while)
   command: "sudo DOKKU_TAG={{ dokku_version }} DEBIAN_FRONTEND=noninteractive bash /tmp/bootstrap.sh"
   sudo: yes
 
-- name: "Install plugins if specified"
+- name: install plugins
   git: "repo={{ item.repo }} dest=/var/lib/dokku/plugins/{{ item.name }} accept_hostkey=yes version={{ item.version|default('master') }}"
   with_items: dokku_plugins
   sudo: yes
