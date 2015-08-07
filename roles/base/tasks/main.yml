@@ -1,5 +1,6 @@
 ---
 
+
 - name: prep root .ssh
   file: path=/root/.ssh state=directory mode=0700
   sudo: yes
@@ -11,8 +12,15 @@
 - name: install base packages
   apt: name={{ item }} state=latest update_cache=yes
   with_items:
-    - tmux
-    - htop
-    - wget
-    - software-properties-common
     - fail2ban
+    - htop
+    - language-pack-en-base
+    - software-properties-common
+    - tmux
+    - wget
+
+- name: locale setup
+  shell: LANGUAGE=en_US.UTF-8 export LANG=en_US.UTF-8 export LC_ALL=en_US.UTF-8 locale-gen en_US.UTF-8
+  shell: dpkg-reconfigure locales
+  sudo: yes
+
