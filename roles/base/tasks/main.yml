@@ -29,3 +29,6 @@
     - LC_ALL="en_US.UTF-8"
   sudo: yes
 
+- name: increase file watches
+  shell: sysctl -w fs.inotify.max_user_watches=100000
+  sudo: yes
