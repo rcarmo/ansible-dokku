@@ -8,7 +8,7 @@
     - dokku_vhost: "{{ hostname }}"
     - dokku_plugins: 
         - { repo: "http://github.com/ohardy/dokku-volume", name: "volume" }
-        - { repo: "http://github.com/statianzo/dokku-shoreman", name: "dokku-shoreman" }
+        - { repo: "http://github.com/statianzo/dokku-supervisord", name: "dokku-supervisord" }
     - ssh_keys: []
 
   roles:
