@@ -7,8 +7,9 @@
     - dokku_version: "0.3.22"
     - dokku_vhost: "{{ hostname }}"
     - dokku_plugins: 
-        - { repo: "http://github.com/ohardy/dokku-volume", name: "volume" }
-        - { repo: "http://github.com/statianzo/dokku-supervisord", name: "dokku-supervisord" }
+        - { repo: "https://github.com/rcarmo/dokku-supervisord", name: "supervisord" }
+        - { repo: "https://github.com/rcarmo/dokku-secure-apps", name: "secure-apps" }
+        - { repo: "https://github.com/rcarmo/dokku-nginx-cache", name: "nginx-cache" }
     - ssh_keys: []
 
   roles:
