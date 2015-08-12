@@ -24,3 +24,7 @@
 - name: install plugins
   shell: dokku plugins-install
   sudo: yes
+  
+- name: add current user to docker group (for completeness)
+  shell: usermod -aG docker {{ ansible_ssh_user }}
+  sudo: yes
