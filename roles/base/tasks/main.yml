@@ -28,6 +28,12 @@
     - LC_ALL="en_US.UTF-8"
   sudo: yes
 
+- name: timezone setup
+  shell: timedatectl set-timezone Europe/Lisbon
+  sudo: yes
+  tags:
+    - configuration
+
 - name: system tuning
   shell: sysctl -w "{{ item }}"
   with_items:
