@@ -9,7 +9,7 @@
     - "dokku/web_config boolean false"
     - "dokku/vhost_enable boolean true"
     - "dokku/hostname string {{ dokku_vhost }}"
-    - "dokku/key_file string /root/.ssh/id_rsa.pub"
+    - "dokku/key_file string /home/{{ ansible_ssh_user}}/.ssh/authorized_keys"
   sudo: yes
 
 - name: install stable release (including buildstep, should take a while)
@@ -20,11 +20,7 @@
   git: "repo={{ item.repo }} dest=/var/lib/dokku/plugins/{{ item.name }} accept_hostkey=yes version={{ item.version|default('master') }}"
   with_items: dokku_plugins
   sudo: yes
-  
-- name: install plugins
-  shell: dokku plugins-install
-  sudo: yes
-  
+    
 - name: add current user to docker group (for completeness)
   shell: usermod -aG docker {{ ansible_ssh_user }}
   sudo: yes
